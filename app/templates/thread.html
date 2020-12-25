@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="navbar navbar-default"> 
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <h2 class="navbar-brand">NOT Reddit</h2>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="{{ url_for('profile', username=account.username) }}">Profile</a></li>
+                <li><a href="{{ url_for('index') }}">Feed</a></li>
+                <li><a href="{{ url_for('explore') }}">Explore</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </div>
+    </div> 
+    <div class="thread">
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.content }}</p>
+    </div>
+    <div class=form>
+        <form action="/thread/{{ post.id }}" method="post">
+            {{ form.csrf_token }}
+            <p>
+                {{ form.text.label }}
+                {{ form.text(size=300) }}
+            </p>
+            <p> {{ form.submit() }} </p>
+        </form>
+    </div>
+    <div class="comments">
+        {% for comment in comments %}
+            <h3>{{ comment.user_id }}</h3>
+            <p>{{ comment.text }}</p>
+        {% endfor %}
+    </div>
+
+{% endblock %}

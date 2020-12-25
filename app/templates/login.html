@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>NOT Reddit</h1>
+    <h2>LOGIN</h2>
+    <div>
+        <form action="/login" method="post">
+            {{ form.csrf_token }}
+            <p>
+                {{ form.email.label }}
+                {{ form.email(size=32) }}
+            </p>
+            <p>
+                {{ form.password.label }}
+                {{ form.password(size=32) }}
+            </p>
+            <p>
+                {{ form.remember_me() }} {{ form.remember_me.label }}
+                {{ form.submit() }}
+            </p>
+        </form>
+        <p><a href="{{ url_for('register') }}">Register Here</a></p>
+    </div>
+
+{% endblock %}

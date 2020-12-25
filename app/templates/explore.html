@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="navbar navbar-default"> 
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <h2 class="navbar-brand">NOT Reddit</h2>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="{{ url_for('profile', username=account.username) }}">Profile</a></li>
+                <li><a href="{{ url_for('index') }}">Feed</a></li>
+                <li><a href="{{ url_for('explore') }}">Explore</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+    <h1>Explore NOT subreddits</h1>
+    <ul>
+        <li><a href="{{ url_for('board', bname='art') }}"> Art </a></li>
+        <li><a href="{{ url_for('board', bname='anime') }}"> Anime </a></li>
+        <li><a href="{{ url_for('board', bname='electronics') }}"> Electronics </a></li>
+        <li><a href="{{ url_for('board', bname='technology') }}"> Technology </a></li>
+    </ul>
+{% endblock %}
