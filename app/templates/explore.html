@@ -16,9 +16,8 @@
     </div>
     <h1>Explore NOT subreddits</h1>
     <ul>
-        <li><a href="{{ url_for('board', bname='art') }}"> Art </a></li>
-        <li><a href="{{ url_for('board', bname='anime') }}"> Anime </a></li>
-        <li><a href="{{ url_for('board', bname='electronics') }}"> Electronics </a></li>
-        <li><a href="{{ url_for('board', bname='technology') }}"> Technology </a></li>
+        {% for b in boards %}
+            <li><a href="{{ url_for('board', bname=b.name) }}"> {{ b.name }} </a></li>
+        {% endfor %}
     </ul>
 {% endblock %}

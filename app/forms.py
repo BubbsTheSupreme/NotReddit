@@ -4,9 +4,8 @@ from wtforms.widgets import TextArea
 from wtforms import StringField, PasswordField, BooleanField, TextAreaField, SubmitField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
 
-class EditProfileForm(FlaskForm):
-    username = StringField('Username')
-    bio = TextAreaField('Bio')
+class EditBioForm(FlaskForm):
+    bio = TextAreaField('Bio', widget=TextArea())
     submit = SubmitField('Submit')
 
 class RegisterForm(FlaskForm):

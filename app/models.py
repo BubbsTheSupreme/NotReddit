@@ -3,6 +3,12 @@ from datetime import datetime
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
+followers = db.Table('followers',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('board_id', db.Integer, db.ForeignKey('board.id'))
+)
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120))
@@ -11,6 +17,7 @@ class User(UserMixin, db.Model):
     bio = db.Column(db.String(120))
     posts = db.relationship('Post', backref='author')
     comments = db.relationship('Comment', backref='commenter')
+    followed_boards = db.relationship('Board', secondary=followers, backref=db.backref('followers', lazy='dynamic'))
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -34,14 +41,12 @@ class Post(db.Model):
     time = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     comments = db.relationship('Comment', backref='thread')
 
-
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String(300))
     time = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    pass
 
 @login.user_loader
 def load_user(user_id):
