@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block app_content %}
     <div class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
-                <h2 class="navbar-brand">NOT Reddit</h2>
+                <p class="navbar-brand">NOT Reddit</p>
             </div>
             <ul class="nav navbar-nav">
                 <li class="active"><a href="{{ url_for('profile', username=account.username) }}">Profile</a></li>
@@ -35,6 +35,7 @@
     </div>
     {% for post in posts %}
         <h3><a href="{{ url_for('thread', postid=post.id) }}">{{ post.title }}</a></h3>
+        <!-- add a conditional statement to make sure you cant delete someone elses post -->
         <a href="{{ url_for('delete_thread', thread_id=post.id) }}">Delete</a>
     {% endfor %}
 {% endblock %}

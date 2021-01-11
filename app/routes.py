@@ -1,16 +1,23 @@
 from app.forms import RegisterForm, LoginForm, CommentForm, CreatePostForm, EditBioForm
 from flask import render_template, redirect, flash, url_for, request, get_flashed_messages
 from flask_login import logout_user, current_user, login_user, login_required
-from app.models import User, Board, Post, Comment
+from app.models import User, Board, Post, Comment, followers
 from app import app, db
 
 
 @app.route('/index', methods=['GET'])
 @login_required
 def index():
-    user = User.query.filter_by(id=current_user.id).first()
-    print(user.followed_boards)
-    return render_template('index.html', title='Feed', account=current_user)
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.join(
+            followers, (followers.c.board_id == Post.board_id)).filter(
+                followers.c.user_id == current_user.id).order_by(
+                    Post.time.desc()).paginate(page, 15, False)
+    next_url = url_for('index', page=posts.next_num) \
+        if posts.has_next else None
+    prev_url = url_for('index', page=posts.prev_num) \
+        if posts.has_prev else None
+    return render_template('index.html', title='Feed', account=current_user, posts=posts.items, prev_url=prev_url, next_url=next_url)
 
 @app.route('/profile/<username>', methods=['GET', 'POST'])
 @login_required

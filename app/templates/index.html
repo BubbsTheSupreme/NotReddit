@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block app_content %}
 <div class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -14,6 +14,23 @@
         </ul>
     </div>
 </div>
+
+<div>
+    {% for post in posts %}
+        <div id="post">
+            <h3><a href="{{ url_for('thread', postid=post.id) }}">{{ post.title }}</a></h3>
+        </div>
+    {% endfor %}
+    <div id="pagination">
+        {% if prev_url %}
+            <a href="{{ prev_url }}">Back</a>
+        {% endif %}
+        {% if next_url %}
+            <a href="{{ next_url }}">Next</a>
+        {% endif %}
+    </div>
+</div>
+
 
 
 {% endblock %}

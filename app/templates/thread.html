@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block app_content %}
     <div class="navbar navbar-default"> 
         <div class="container-fluid">
             <div class="navbar-header">
@@ -30,7 +30,6 @@
     </div>
     <div class="comments">
         {% for comment in comments %}
-            <h3>{{ comment.user_id }}</h3>
             <p>{{ comment.text }}</p>
             <a href="{{ url_for('delete_comment', comment_id=comment.id) }}">Delete</a>
         {% endfor %}
